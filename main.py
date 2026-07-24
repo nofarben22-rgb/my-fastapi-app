@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from fastapi import FastAPI, HTTPException, Form
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from init_db import init_db
 
@@ -18,7 +19,9 @@ def get_db():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Database connection failed: {str(e)}")
 
-# הגשת הקבצים מהתיקייה הראשית
+# הגשת כל הקבצים מתיקיית השורש
+app.mount("/static", StaticFiles(directory="."), name="static")
+
 @app.get("/")
 def read_root():
     return FileResponse("index.html")
