@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת זימון תורים</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <div>
+            <h1>מערכת <span>זימון תורים</span></h1>
+            <p>אפיון ותכן מערכות מידע — פרויקט גמר</p>
+        </div>
+        <div class="logo-badge">+</div>
+    </header>
+
+    <main>
+        <section class="card form-card">
+            <h2 id="form-title">קביעת תור חדש</h2>
+
+            <form id="appointment-form">
+                <input type="hidden" id="appointment-id">
+
+                <div class="form-grid">
+                    <label>
+                        לקוח
+                        <select id="customer-id" required>
+                          <option value="" disabled selected>בחר/י לקוח/ה</option>
+                          <option value="עומר כהן">עומר כהן</option>
+                          <option value="דניאל לוי">דניאל לוי</option>
+                          <option value="שירה אברהם">שירה אברהם</option>
+                          <option value="איתי ישראלי">איתי ישראלי</option>
+                          <option value="מיכל שלום">מיכל שלום</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        שם הרופא
+                        <select id="doctor-name" required>
+                          <option value="" disabled selected>בחר/י רופא/ה</option>
+                          <option value="ד''ר יעל ישראלי">ד"ר יעל ישראלי</option>
+                          <option value="ד''ר נופר בן עמי">ד"ר נופר בן עמי</option>
+                          <option value="ד''ר משה כהן">ד"ר משה כהן</option>
+                          <option value="ד''ר שרה לוי">ד"ר שרה לוי</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        תחום התמחות
+                        <select id="specialization" required>
+                          <option value="" disabled selected>בחר/י תחום התמחות</option>
+                          <option value="רפואת משפחה">רפואת משפחה</option>
+                          <option value="רפואת שיניים">רפואת שיניים</option>
+                          <option value="עיניים">עיניים</option>
+                          <option value="עור">עור</option>
+                          <option value="ילדים">ילדים</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        מרפאה
+                        <select id="clinic-name" required>
+                          <option value="" disabled selected>בחר/י מרפאה</option>
+                          <option value="מרפאת כללית דרום">מרפאת כללית מרכז</option>
+                          <option value="מרפאת כללית מרכז">מרפאת כללית רמז</option>
+                          <option value="מרפאת מכבי צפון">מרפאת מכבי צפון</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        תאריך
+                        <input id="appointment-date" type="date" required>
+                    </label>
+
+                    <label>
+                        שעה
+                        <input id="appointment-time" type="time" required>
+                    </label>
+
+                    <label>
+                        סוג התור
+                        <select id="appointment-type" required>
+                            <option value="ביקור במרפאה">ביקור במרפאה</option>
+                            <option value="ייעוץ אונליין">ייעוץ אונליין</option>
+                            <option value="בדיקה">בדיקה</option>
+                            <option value="שיננית">שיננית</option>
+                            <option value="טיפול כרורגי">טיפול כרורגי</option>
+                            <option value="חיסון">חיסון</option>
+                        </select>
+                    </label>
+
+                    <label class="full-width">
+                        הערות
+                        <textarea id="notes" rows="3" placeholder="הערות נוספות"></textarea>
+                    </label>
+                </div>
+
+                <div class="actions">
+                    <button class="primary" type="submit" id="submit-button">קבע/י תור</button>
+                    <button class="secondary hidden" type="button" id="cancel-edit-button">
+                        ביטול עריכה
+                    </button>
+                </div>
+            </form>
+
+            <p id="message" role="alert"></p>
+        </section>
+
+        <section class="card">
+            <div class="section-heading">
+                <h2>רשימת תורים קיימים</h2>
+                <button class="secondary" id="refresh-button">רענון</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>לקוח</th>
+                            <th>רופא ותחום</th>
+                            <th>מרפאה</th>
+                            <th>מועד</th>
+                            <th>סוג</th>
+                            <th>סטטוס</th>
+                            <th>פעולות</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointments-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
