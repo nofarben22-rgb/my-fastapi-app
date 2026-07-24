@@ -1,7 +1,6 @@
 import os
 import sqlite3
 from fastapi import FastAPI, HTTPException, Form
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from init_db import init_db
 
@@ -19,20 +18,22 @@ def get_db():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Database connection failed: {str(e)}")
 
-# הגשת כל הקבצים מתיקיית השורש
-app.mount("/static", StaticFiles(directory="."), name="static")
-
+# הגשת עמוד הבית
 @app.get("/")
 def read_root():
     return FileResponse("index.html")
 
+# הגשת קובץ העיצוב (תמיכה בכל הנתיבים האפשריים)
 @app.get("/style.css")
+@app.get("/static/style.css")
 def get_css():
-    return FileResponse("style.css")
+    return FileResponse("style.css", media_type="text/css")
 
+# הגשת קובץ ה-JS (תמיכה בכל הנתיבים האפשריים)
 @app.get("/app.js")
+@app.get("/static/app.js")
 def get_js():
-    return FileResponse("app.js")
+    return FileResponse("app.js", media_type="application/javascript")
 
 # שליפת לקוחות עבור השדה הנגלל בטופס
 @app.get("/api/customers")
