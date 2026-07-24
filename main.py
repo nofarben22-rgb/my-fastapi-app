@@ -19,12 +19,16 @@ def get_db():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Database connection failed: {str(e)}")
 
-# הגשת קבצים סטטיים מתיקיית static
-app.mount("/static", StaticFiles(directory="static"), name="static")
+# מציאת הנתיב המוחלט של תיקיית static הנוכחית
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+static_dir = os.path.join(BASE_DIR, "static")
+
+# הגשת הקבצים הסטטיים
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 @app.get("/")
 def read_root():
-    return FileResponse("index.html")
+    return FileResponse(os.path.join(BASE_DIR, "index.html"))
 
 # שליפת לקוחות עבור השדה הנגלל בטופס
 @app.get("/api/customers")
