@@ -1,7 +1,6 @@
 import os
 import sqlite3
 from fastapi import FastAPI, HTTPException, Form
-from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from init_db import init_db
 
@@ -19,17 +18,18 @@ def get_db():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Database connection failed: {str(e)}")
 
-# הגשת קבצים סטטיים
-if os.path.exists("static"):
-    app.mount("/static", StaticFiles(directory="static"), name="static")
-
+# הגשת הקבצים מהתיקייה הראשית
 @app.get("/")
 def read_root():
-    if os.path.exists("index.html"):
-        return FileResponse("index.html")
-    elif os.path.exists("static/index.html"):
-        return FileResponse("static/index.html")
-    return {"message": "Welcome to Clalit API"}
+    return FileResponse("index.html")
+
+@app.get("/style.css")
+def get_css():
+    return FileResponse("style.css")
+
+@app.get("/app.js")
+def get_js():
+    return FileResponse("app.js")
 
 # שליפת לקוחות עבור השדה הנגלל בטופס
 @app.get("/api/customers")
